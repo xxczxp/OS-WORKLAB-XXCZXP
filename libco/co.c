@@ -1,6 +1,7 @@
 #include "co.h"
 #include <stdlib.h>
 
+int a;
 struct co {
 };
 
