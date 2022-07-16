@@ -109,7 +109,10 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 }
 
 void co_wait(struct co *co) {
-  
+  currentCo->status=CO_WAITING;
+  currentCo->waiter=co;
+  co_yield();
+  deleteCo(co);
 }
 
 void co_yield() {
@@ -117,8 +120,22 @@ void co_yield() {
     struct co * p=currentCo;
     while ((p=p->right)!=currentCo)
     {
-      if(p->status==CO_RUNNING){
-
+      switch(p->status){
+        case CO_NEW:
+          currentCo=p;
+          excuteCo(p);
+          break;
+        case CO_RUNNING:
+          currentCo=p;
+          longjmp(p->context,1);
+          break;
+        case CO_WAITING:
+          if(p->waiter->status==CO_DEAD){
+            p->status=CO_RUNNING;
+            longjmp(p->context,1);
+          }
+        case CO_DEAD:
+          break;
       }
     }
     
