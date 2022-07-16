@@ -123,6 +123,7 @@ void co_yield() {
       switch(p->status){
         case CO_NEW:
           currentCo=p;
+          p->status=CO_RUNNING;
           excuteCo(p);
           break;
         case CO_RUNNING:
