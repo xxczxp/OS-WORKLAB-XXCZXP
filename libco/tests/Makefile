@@ -21,3 +21,6 @@ libco-test-32: main.c
 
 clean:
 	rm -f libco-test-*
+
+mytry: libco
+	
