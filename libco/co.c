@@ -131,6 +131,7 @@ void co_yield() {
           break;
         case CO_WAITING:
           if(p->waiter->status==CO_DEAD){
+            currentCo=p;
             p->status=CO_RUNNING;
             longjmp(p->context,1);
           }
