@@ -82,7 +82,7 @@ void excuteCo(struct co * co){
 #if __x86_64__
   void* s_top=&(co->stack[(STACK_SIZE/8-1)*8]);
   *((void * *)s_top)=&runningEndCo;
-  stack_switch_call(s_top,co->func,co->arg);
+  stack_switch_call(s_top,co->func,(uintptr_t)co->arg);
 #else //TODO for 32 machine 
     
 #endif
