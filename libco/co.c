@@ -90,7 +90,7 @@ void excuteCo(struct co * co){
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   static int isFirst=1;
-  if(isFirst==0){
+  if(isFirst==1){
     currentCo=creatMainCo();
     isFirst=0;
   }
@@ -124,3 +124,8 @@ void co_yield() {
     
   }
 }
+
+/*
+set environment LD_LIBRARY_PATH ..
+
+*/
